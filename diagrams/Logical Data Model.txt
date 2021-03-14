@@ -1,0 +1,69 @@
+TABLE fact_immigration {
+cicid double  [pk]
+i94yr double
+i94mon double
+i94cit double
+country_residence_code double [ref: > dim_country.country_code]
+i94port varchar
+arrdate varchar [ref: > dim_calendar.arrdate]
+i94mode double
+state_code varchar [ref: > dim_demographics.state_code]
+depdate double
+i94bir double
+i94visa double
+count double
+dtadfile varchar
+visapost varchar
+entdepa varchar
+entdepd varchar
+matflag varchar
+biryear double
+dtaddto varchar
+gender varchar
+airline varchar
+admnum double
+fltno varchar
+visa_type_key varchar [ref: > dim_visatype.visa_type_key]
+
+Indexes {
+    (country_residence_code, arrdate,state_code, visa_type_key) [name:'product_status']
+    cicid [unique]
+  }
+}
+
+TABLE dim_demographics {
+  city varchar [pk]
+  state varchar [pk]
+  median_age float
+  male_population int
+  female_population int
+  total_population int
+  number_of_veterans int
+  foreign_born int
+  average_household_size float
+  state_code varchar [pk]
+  race varchar [pk]
+  count int
+  id varchar
+}
+
+TABLE dim_visatype {
+	visatype varchar
+	visa_type_key varchar [pk]
+}
+	
+TABLE dim_country {
+	country_code int [pk]
+	country varchar
+	average_temperature float 
+}
+
+TABLE dim_calendar {
+arrdate varchar [PK]
+arrival_day int 
+arrival_week int 
+arrival_month int 
+arrival_year int 
+arrival_weekday int 
+id varchar  
+}
